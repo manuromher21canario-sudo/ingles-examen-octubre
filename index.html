@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Examen Inglés 30/10</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=Caveat:wght@600&display=swap">
+<style>
+/* Layout: misma ficha de clase que irregular-verbs.html — cabecera, pestañas fijas y tarjetas tipo hoja con tinta azul */
+:root {
+  --paper: #fbfcfe;
+  --sheet: #ffffff;
+  --rule: #dbe3ee;
+  --ink: #1b2433;
+  --muted: #5d6b80;
+  --pen: #1f4fd1;
+  --pen-soft: #e6edff;
+  --red: #c0352b;
+  --ok: #157a43;
+  --ok-soft: #e2f5ea;
+  --bad: #c0352b;
+  --bad-soft: #fde8e6;
+  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-hand: "Caveat", "Comic Sans MS", cursive;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #10141c; --sheet: #171d28; --rule: #2a3445; --ink: #e8edf5; --muted: #9aa7bb;
+    --pen: #8fb0ff; --pen-soft: #1f2b47; --red: #ff8a7e; --ok: #5fd394; --ok-soft: #173325; --bad: #ff8a7e; --bad-soft: #3a1f1d;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #10141c; --sheet: #171d28; --rule: #2a3445; --ink: #e8edf5; --muted: #9aa7bb;
+  --pen: #8fb0ff; --pen-soft: #1f2b47; --red: #ff8a7e; --ok: #5fd394; --ok-soft: #173325; --bad: #ff8a7e; --bad-soft: #3a1f1d;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 var(--f-body); }
+.wrap { max-width: 860px; margin: 0 auto; padding-inline: 16px; }
+header { padding-block: 28px 18px; display: grid; gap: 6px; }
+.eyebrow { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+h1 { font: 800 clamp(30px, 6vw, 44px)/1.05 var(--f-display); margin: 0; text-wrap: balance; }
+h1 span { color: var(--pen); }
+h2 { font: 800 clamp(22px, 4vw, 28px)/1.15 var(--f-display); margin: 0; }
+h3 { font: 700 18px/1.3 var(--f-display); margin: 0; color: var(--pen); }
+p { margin: 0; }
+.lead { color: var(--muted); max-width: 62ch; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid var(--pen); outline-offset: 2px; }
+
+nav { position: sticky; top: 0; z-index: 5; background: var(--sheet); border-block: 1px solid var(--rule); }
+nav .wrap { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+.tab { background: none; border: 0; padding: 13px 12px 11px; white-space: nowrap; font-weight: 700; font-size: 15px; color: var(--muted); border-bottom: 3px solid transparent; }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--pen); }
+main { padding-block: 24px 64px; }
+section.view { display: grid; gap: 18px; }
+section.view[hidden] { display: none; }
+
+.card { background: var(--sheet); border: 1.5px solid var(--rule); border-radius: 14px; padding: 18px; display: grid; gap: 10px; }
+.hand { font-family: var(--f-hand); font-size: 22px; color: var(--pen); line-height: 1.2; }
+
+/* Para copiar */
+.copy ol { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+.copy li { padding-left: 0; }
+.copy .n { font-weight: 700; color: var(--pen); margin-right: 6px; }
+.copy .c { font-weight: 700; }
+.copy .ex { color: var(--muted); font-style: italic; }
+.copy .sub { padding-left: 22px; display: grid; gap: 4px; }
+.vocab { width: 100%; border-collapse: collapse; }
+.vocab td { padding: 6px 4px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.vocab td:first-child { font-weight: 700; width: 45%; }
+
+/* Controles */
+.controls { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+.seg { display: inline-flex; border: 1.5px solid var(--rule); border-radius: 10px; overflow: hidden; background: var(--sheet); }
+.seg button { font-weight: 700; font-size: 14px; color: var(--muted); background: none; border: 0; padding: 8px 12px; }
+.seg button + button { border-left: 1.5px solid var(--rule); }
+.seg button[aria-pressed="true"] { background: var(--pen-soft); color: var(--pen); }
+.btn { border: 1.5px solid var(--pen); background: var(--pen); color: #fff; border-radius: 10px; padding: 10px 16px; font-weight: 700; }
+.btn.ghost { background: none; color: var(--pen); }
+.btn.ok { background: var(--ok); border-color: var(--ok); }
+.btn.bad { background: var(--bad); border-color: var(--bad); }
+:root[data-theme="dark"] .btn:not(.ghost), :root:not([data-theme="light"]) .btn:not(.ghost) { color: #fff; }
+
+/* Tarjetas de vocabulario */
+.flash { text-align: center; padding: 34px 18px; gap: 14px; }
+.flash .word { font: 800 clamp(28px, 7vw, 40px)/1.15 var(--f-display); }
+.flash .answer { font-family: var(--f-hand); font-size: 30px; color: var(--pen); min-height: 36px; }
+.flash .row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.progress { color: var(--muted); font-size: 14px; }
+
+/* Ejercicios */
+.ex-item { display: grid; gap: 8px; padding-block: 12px; border-bottom: 1px solid var(--rule); }
+.ex-item:last-child { border-bottom: 0; }
+.ex-item input { font: inherit; border: 1.5px solid var(--rule); border-radius: 8px; padding: 6px 10px; background: var(--paper); color: var(--ink); width: min(220px, 100%); }
+.ex-item.right input { border-color: var(--ok); background: var(--ok-soft); }
+.ex-item.wrong input { border-color: var(--bad); background: var(--bad-soft); }
+.opts { display: flex; gap: 8px; flex-wrap: wrap; }
+.opts button { border: 1.5px solid var(--rule); background: var(--paper); border-radius: 8px; padding: 6px 14px; font-weight: 700; }
+.opts button.right { border-color: var(--ok); background: var(--ok-soft); color: var(--ok); }
+.opts button:disabled:not(.right) { opacity: .35; cursor: default; }
+.sentence { font-size: 19px; }
+.why { font-size: 14px; color: var(--muted); }
+.why[hidden] { display: none; }
+.score { font-weight: 700; }
+a { color: var(--pen); }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="eyebrow">Inglés · 4º ESO · Viernes 30 de octubre</div>
+  <h1>Examen de <span>Reading, Grammar &amp; Vocabulary</span></h1>
+  <p class="lead">Past simple, present perfect, expresiones de tiempo, verbos irregulares y vocabulario de History y Environment. Las traducciones son las de tus apuntes.</p>
+</header>
+
+<nav aria-label="Secciones">
+  <div class="wrap" role="tablist">
+    <button class="tab" role="tab" data-tab="copiar" aria-selected="true">Para copiar</button>
+    <button class="tab" role="tab" data-tab="vocab" aria-selected="false">Vocabulario</button>
+    <button class="tab" role="tab" data-tab="grammar" aria-selected="false">Gramática</button>
+    <button class="tab" role="tab" data-tab="irreg" aria-selected="false">Verbos irregulares</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- 1. PARA COPIAR -->
+<section class="view copy" data-view="copiar">
+  <p class="lead">Resumen numerado para pasarlo a mano. Primero la gramática y después el vocabulario.</p>
+
+  <div class="card">
+    <h3>1. Past simple</h3>
+    <ol>
+      <li><span class="n">1.1</span><span class="c">Para qué sirve:</span> acciones que empezaron y terminaron en un momento concreto del pasado. Sabemos <em>cuándo</em> pasó.</li>
+      <li><span class="n">1.2</span><span class="c">Afirmativa:</span> verbo + <b>-ed</b> (regulares) o la <b>2ª columna</b> de la lista (irregulares). <span class="ex">They raised money. The war ended in 1945.</span></li>
+      <li><span class="n">1.3</span><span class="c">Negativa:</span> <b>didn't + infinitivo</b> (el verbo vuelve a la forma normal). <span class="ex">They didn't take action.</span></li>
+      <li><span class="n">1.4</span><span class="c">Pregunta:</span> <b>Did + sujeto + infinitivo?</b> <span class="ex">Did the army take control?</span></li>
+      <li><span class="n">1.5</span><span class="c">Expresiones de tiempo:</span> yesterday, last week / month / year, … ago (hace…), in 1492, when I was a child.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>2. Present perfect</h3>
+    <ol>
+      <li><span class="n">2.1</span><span class="c">Forma:</span> <b>have / has + participio</b> (verbo + -ed o la <b>3ª columna</b> de la lista). Has con he, she, it.</li>
+      <li><span class="n">2.2</span><span class="c">Para qué sirve:</span>
+        <div class="sub">
+          <span>a) Experiencias sin decir cuándo. <span class="ex">I have seen an oil spill.</span></span>
+          <span>b) Algo que empezó en el pasado y sigue ahora. <span class="ex">We have lived here since 2015.</span></span>
+          <span>c) Algo reciente que tiene efecto ahora. <span class="ex">She has just finished.</span></span>
+        </div>
+      </li>
+      <li><span class="n">2.3</span><span class="c">Negativa:</span> <b>haven't / hasn't + participio.</b> <span class="ex">They haven't restored the castle.</span></li>
+      <li><span class="n">2.4</span><span class="c">Pregunta:</span> <b>Have / Has + sujeto + participio?</b> <span class="ex">Have you ever seen a whale?</span></li>
+      <li><span class="n">2.5</span><span class="c">Expresiones de tiempo:</span> ever, never, already, yet, just, for, since, recently, so far.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>3. Expresiones de tiempo</h3>
+    <ol>
+      <li><span class="n">3.1</span><span class="c">for:</span> duración, cuánto tiempo. <span class="ex">for ten years, for two hours.</span></li>
+      <li><span class="n">3.2</span><span class="c">since:</span> desde cuándo, el punto de inicio. <span class="ex">since 2015, since Monday.</span></li>
+      <li><span class="n">3.3</span><span class="c">ago:</span> «hace…». Va con <b>past simple</b> y detrás de la cantidad. <span class="ex">two years ago.</span></li>
+      <li><span class="n">3.4</span><span class="c">already:</span> «ya», en frases afirmativas. Va entre have y el participio. <span class="ex">I have already eaten.</span></li>
+      <li><span class="n">3.5</span><span class="c">yet:</span> «ya» en preguntas y «todavía» en negativas. Va al final. <span class="ex">Have you finished yet? I haven't finished yet.</span></li>
+      <li><span class="n">3.6</span><span class="c">just:</span> «acabar de». Va entre have y el participio. <span class="ex">They have just arrived.</span></li>
+      <li><span class="n">3.7</span><span class="c">ever / never:</span> «alguna vez» (en preguntas) y «nunca». <span class="ex">Have you ever…? I have never…</span></li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>4. ¿Past simple o present perfect?</h3>
+    <ol>
+      <li><span class="n">4.1</span><span class="c">Regla clave:</span> si la frase dice <b>cuándo</b> pasó (yesterday, last…, ago, in 1990), es <b>past simple</b>.</li>
+      <li><span class="n">4.2</span><span class="c">Si no dice cuándo</span>, o el tiempo todavía no ha terminado (this week, so far, since…), es <b>present perfect</b>.</li>
+      <li><span class="n">4.3</span><span class="c">Error típico:</span> <span class="ex">I have seen him yesterday</span> ✗ → <span class="ex">I saw him yesterday</span> ✓</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>5. Vocabulary: History</h3>
+    <table class="vocab" id="tbl-history"></table>
+  </div>
+  <div class="card">
+    <h3>6. Vocabulary: Environment</h3>
+    <table class="vocab" id="tbl-env"></table>
+  </div>
+</section>
+
+<!-- 2. VOCABULARIO -->
+<section class="view" data-view="vocab" hidden>
+  <p class="lead">Mira la palabra, intenta decir la traducción en voz alta y después pulsa «Ver respuesta». Las que no sepas vuelven a salir al final.</p>
+  <div class="controls">
+    <div class="seg" id="vgroup">
+      <button data-v="all" aria-pressed="true">Todo</button>
+      <button data-v="history" aria-pressed="false">History</button>
+      <button data-v="env" aria-pressed="false">Environment</button>
+    </div>
+    <div class="seg" id="vdir">
+      <button data-v="en" aria-pressed="true">Inglés → español</button>
+      <button data-v="es" aria-pressed="false">Español → inglés</button>
+    </div>
+  </div>
+  <div class="card flash">
+    <div class="progress" id="fprog"></div>
+    <div class="word" id="fword"></div>
+    <div class="answer" id="fans"></div>
+    <div class="row" id="frow"></div>
+  </div>
+</section>
+
+<!-- 3. GRAMÁTICA -->
+<section class="view" data-view="grammar" hidden>
+  <div class="card">
+    <h2>A. Past simple o present perfect</h2>
+    <p class="lead">Escribe lo que va en el hueco, sin el sujeto. Cuando esté bien se pone verde y pasa sola a la siguiente. Busca la pista: ¿dice cuándo pasó?</p>
+    <div class="ex-item" id="item-a">
+      <p class="sentence" id="sent-a"></p>
+      <input type="text" id="input-a" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Tu respuesta">
+      <p class="why" id="why-a" hidden></p>
+    </div>
+    <div class="controls">
+      <button class="btn ghost" id="skip-a">Saltar</button>
+      <span class="score" id="score-a"></span>
+    </div>
+  </div>
+  <div class="card">
+    <h2>B. Expresiones de tiempo</h2>
+    <p class="lead">Elige la palabra que completa la frase. Si fallas, esa opción se apaga y puedes volver a probar.</p>
+    <div class="ex-item" id="item-b">
+      <p class="sentence" id="sent-b"></p>
+      <div class="opts" id="opts-b"></div>
+      <p class="why" id="why-b" hidden></p>
+    </div>
+    <p class="score" id="score-b"></p>
+  </div>
+</section>
+
+<!-- 4. VERBOS IRREGULARES -->
+<section class="view" data-view="irreg" hidden>
+  <div class="card">
+    <h2>Verbos irregulares</h2>
+    <p>Ya tienes una web para practicarlos con las caras 1 y 2 de tu hoja. Te hacen falta las dos formas: la <b>2ª columna</b> para el past simple y la <b>3ª</b> para el present perfect.</p>
+    <p><a class="btn" href="irregular-verbs.html" style="display:inline-block;text-decoration:none">Abrir la web de verbos irregulares</a></p>
+  </div>
+</section>
+
+</main>
+
+<script>
+// Vocabulario tal cual está en los apuntes de clase
+const HISTORY = [
+  ["accomplishment", "logro"],
+  ["army", "ejército"],
+  ["decline", "descenso, disminución"],
+  ["development", "avance, creación, desarrollo"],
+  ["freedom", "libertad"],
+  ["government", "gobierno"],
+  ["knowledge", "conocimientos"],
+  ["last", "durar"],
+  ["lead to", "llevar, conducir a"],
+  ["long before", "mucho antes (de)"],
+  ["major", "muy importante"],
+  ["play a role", "desempeñar un papel"],
+  ["rule", "gobernar"],
+  ["take control", "hacerse con el control"],
+];
+const ENV = [
+  ["take action", "ponerse en acción"],
+  ["raise money", "recaudar dinero"],
+  ["destruction", "destrucción"],
+  ["bring them back to life", "devolverles a la vida"],
+  ["restore", "restaurar"],
+  ["fossil fuels", "combustibles fósiles"],
+  ["causes", "causas"],
+  ["global warming", "calentamiento global"],
+  ["ban", "prohibir"],
+  ["renewable energy", "energías renovables"],
+  ["exposed", "expuesto"],
+  ["threat", "amenaza"],
+  ["oil spills", "vertidos petrolíferos"],
+  ["sources", "fuentes"],
+  ["wildlife", "vida salvaje"],
+  ["drilling", "perforaciones"],
+];
+
+// Pestañas
+document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
+  document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", x === t));
+  document.querySelectorAll(".view").forEach(v => v.hidden = v.dataset.view !== t.dataset.tab);
+  window.scrollTo({ top: 0 });
+}));
+
+// Tablas de la pestaña «Para copiar»
+function fillTable(id, list) {
+  document.getElementById(id).innerHTML = list.map(([en, es]) => `<tr><td>${en}</td><td>${es}</td></tr>`).join("");
+}
+fillTable("tbl-history", HISTORY);
+fillTable("tbl-env", ENV);
+
+// Tarjetas de vocabulario
+let group = "all", dir = "en", queue = [], done = 0, total = 0;
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function startDeck() {
+  const list = group === "history" ? HISTORY : group === "env" ? ENV : HISTORY.concat(ENV);
+  queue = shuffle(list.slice()); done = 0; total = list.length;
+  showCard();
+}
+function showCard() {
+  const word = document.getElementById("fword"), ans = document.getElementById("fans"), row = document.getElementById("frow");
+  document.getElementById("fprog").textContent = `${done} de ${total} sabidas`;
+  ans.textContent = "";
+  if (!queue.length) {
+    word.textContent = "¡Terminado!";
+    row.innerHTML = `<button class="btn" id="again">Empezar otra vez</button>`;
+    document.getElementById("again").onclick = startDeck;
+    return;
+  }
+  const [en, es] = queue[0];
+  word.textContent = dir === "en" ? en : es;
+  row.innerHTML = `<button class="btn" id="show">Ver respuesta</button>`;
+  document.getElementById("show").onclick = () => {
+    ans.textContent = dir === "en" ? es : en;
+    row.innerHTML = `<button class="btn ok" id="yes">La sabía</button><button class="btn bad" id="no">No la sabía</button>`;
+    document.getElementById("yes").onclick = () => { queue.shift(); done++; showCard(); };
+    document.getElementById("no").onclick = () => { queue.push(queue.shift()); showCard(); };
+  };
+}
+function segment(id, set) {
+  const el = document.getElementById(id);
+  el.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+    el.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    set(b.dataset.v); startDeck();
+  }));
+}
+segment("vgroup", v => group = v);
+segment("vdir", v => dir = v);
+startDeck();
+
+// Generador de frases infinitas: sujeto + verbo + expresión de tiempo. La expresión decide el tiempo verbal.
+// dur: verbos que pueden durar (live, use…), los únicos que van con since/for
+const VERBS = [
+  { b: "visit", p: "visited", pp: "visited", o: "the museum" },
+  { b: "restore", p: "restored", pp: "restored", o: "the old castle" },
+  { b: "ban", p: "banned", pp: "banned", o: "plastic bags" },
+  { b: "see", p: "saw", pp: "seen", o: "an oil spill" },
+  { b: "take", p: "took", pp: "taken", o: "action to protect the planet" },
+  { b: "raise", p: "raised", pp: "raised", o: "money for the animals" },
+  { b: "find", p: "found", pp: "found", o: "new sources of energy" },
+  { b: "build", p: "built", pp: "built", o: "a solar panel" },
+  { b: "write", p: "wrote", pp: "written", o: "a narrative about wildlife" },
+  { b: "read", p: "read", pp: "read", o: "a book about history" },
+  { b: "buy", p: "bought", pp: "bought", o: "an electric car" },
+  { b: "make", p: "made", pp: "made", o: "a video about global warming" },
+  { b: "choose", p: "chose", pp: "chosen", o: "a project about the environment" },
+  { b: "give", p: "gave", pp: "given", o: "money to a charity" },
+  { b: "begin", p: "began", pp: "begun", o: "a new project" },
+  { b: "forget", p: "forgot", pp: "forgotten", o: "the date of the exam" },
+  { b: "live", p: "lived", pp: "lived", o: "in this town", dur: true },
+  { b: "use", p: "used", pp: "used", o: "renewable energy", dur: true },
+  { b: "study", p: "studied", pp: "studied", o: "English", dur: true },
+  { b: "know", p: "knew", pp: "known", o: "about global warming", dur: true },
+];
+// [sujeto, ¿tercera persona (has)?]
+const SUBJECTS = [["I", false], ["You", false], ["We", false], ["They", false], ["My parents", false],
+  ["He", true], ["She", true], ["My sister", true], ["Our teacher", true]];
+// tense: ps = past simple, pp = present perfect · mid: va entre have y el participio
+// k: nondur = solo verbos que no duran, dur = solo los que duran, any = todos
+// bw / bo: palabra que se tapa en el ejercicio B y sus opciones
+const TIMES = [
+  { txt: "yesterday", tense: "ps", k: "nondur", forms: ["aff", "neg", "q"], why: "«yesterday» dice cuándo pasó → past simple." },
+  { txt: "last week", tense: "ps", k: "nondur", forms: ["aff", "neg", "q"], bw: "last", bo: ["last", "since", "ago"], why: "«last week» es un tiempo terminado → past simple." },
+  { txt: "last year", tense: "ps", k: "any", forms: ["aff", "neg", "q"], bw: "last", bo: ["last", "since", "ago"], why: "«last year» es un tiempo terminado → past simple." },
+  { txt: "last summer", tense: "ps", k: "any", forms: ["aff", "neg", "q"], bw: "last", bo: ["last", "since", "ago"], why: "«last summer» es un tiempo terminado → past simple." },
+  { txt: "two days ago", tense: "ps", k: "nondur", forms: ["aff", "neg", "q"], bw: "ago", bo: ["ago", "since", "yet"], why: "«ago» (hace…) siempre va con past simple." },
+  { txt: "three years ago", tense: "ps", k: "any", forms: ["aff", "neg", "q"], bw: "ago", bo: ["ago", "since", "yet"], why: "«ago» (hace…) siempre va con past simple." },
+  { txt: "in 2019", tense: "ps", k: "any", forms: ["aff", "neg", "q"], why: "«in 2019» es una fecha → past simple." },
+  { txt: "already", tense: "pp", mid: true, k: "nondur", forms: ["aff"], bw: "already", bo: ["already", "yet", "ago"], why: "«already» (ya) va con present perfect, entre have/has y el participio." },
+  { txt: "just", tense: "pp", mid: true, k: "nondur", forms: ["aff"], bw: "just", bo: ["just", "yet", "ago"], why: "«just» (acabar de) va con present perfect, entre have/has y el participio." },
+  { txt: "never", tense: "pp", mid: true, k: "any", forms: ["aff"], bw: "never", bo: ["never", "ever", "yet"], why: "«never» (nunca) va con present perfect, entre have/has y el participio." },
+  { txt: "ever", tense: "pp", mid: true, k: "any", forms: ["q"], bw: "ever", bo: ["ever", "yet", "ago"], why: "«ever» (alguna vez) en preguntas → present perfect." },
+  { txt: "yet", tense: "pp", k: "nondur", forms: ["neg", "q"], bw: "yet", bo: ["yet", "already", "just"], why: "«yet» va al final en negativas y preguntas → present perfect." },
+  { txt: "since 2020", tense: "pp", k: "dur", forms: ["aff", "neg"], bw: "since", bo: ["since", "for", "ago"], why: "«since» marca desde cuándo y sigue ahora → present perfect." },
+  { txt: "for two years", tense: "pp", k: "dur", forms: ["aff"], bw: "for", bo: ["for", "since", "ago"], why: "«for» marca cuánto dura y sigue ahora → present perfect." },
+  { txt: "recently", tense: "pp", k: "nondur", forms: ["aff", "neg", "q"], why: "«recently» no dice el momento exacto → present perfect." },
+  { txt: "this week", tense: "pp", k: "nondur", forms: ["aff", "neg", "q"], bw: "this", bo: ["this", "last", "ago"], why: "«this week» todavía no ha terminado → present perfect." },
+];
+const FORM_WHY = {
+  ps: { aff: "", neg: " Negativa: didn't + infinitivo.", q: " Pregunta: Did + sujeto + infinitivo." },
+  pp: { aff: " Have/has + participio.", neg: " Negativa: haven't/hasn't + participio.", q: " Pregunta: Have/Has + sujeto + participio." },
+};
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const cap = s => s[0].toUpperCase() + s.slice(1);
+const norm = s => s.toLowerCase().replace(/[’']/g, "'").replace(/\s+/g, " ").trim();
+
+// Devuelve { text: frase con hueco, ans: respuestas válidas, full: frase completa, why }
+// time: lo que se escribe en el sitio de la expresión (en el ejercicio B, con la palabra tapada)
+function makeSentence(T, time) {
+  let V, S;
+  do { V = pick(VERBS); } while ((T.k === "dur" && !V.dur) || (T.k === "nondur" && V.dur));
+  const F = pick(T.forms);
+  do { S = pick(SUBJECTS); } while (F === "q" && S[0] === "I");
+  const [subj, third] = S;
+  const low = subj === "I" ? "I" : subj.toLowerCase();
+  const aux = third ? "has" : "have";
+  const gap = "______";
+  let text, ans, full;
+  if (T.tense === "ps") {
+    if (F === "aff") { text = `${subj} ${gap} (${V.b}) ${V.o} ${time}.`; ans = [V.p]; full = `${subj} ${V.p} ${V.o} ${time}.`; }
+    if (F === "neg") { text = `${subj} ${gap} (not / ${V.b}) ${V.o} ${time}.`; ans = [`didn't ${V.b}`, `did not ${V.b}`]; full = `${subj} didn't ${V.b} ${V.o} ${time}.`; }
+    if (F === "q") { text = `${gap} (${low} / ${V.b}) ${V.o} ${time}?`; ans = [`did ${low} ${V.b}`]; full = `Did ${low} ${V.b} ${V.o} ${time}?`; }
+  } else if (T.mid) {
+    if (F === "aff") { text = `${subj} ${gap} (${T.txt} / ${V.b}) ${V.o}.`; ans = [`${aux} ${T.txt} ${V.pp}`]; full = `${subj} ${aux} ${time} ${V.pp} ${V.o}.`; }
+    if (F === "q") { text = `${gap} (${low} / ${T.txt} / ${V.b}) ${V.o}?`; ans = [`${aux} ${low} ${T.txt} ${V.pp}`]; full = `${cap(aux)} ${low} ${time} ${V.pp} ${V.o}?`; }
+  } else {
+    if (F === "aff") { text = `${subj} ${gap} (${V.b}) ${V.o} ${time}.`; ans = [`${aux} ${V.pp}`]; full = `${subj} ${aux} ${V.pp} ${V.o} ${time}.`; }
+    if (F === "neg") { text = `${subj} ${gap} (not / ${V.b}) ${V.o} ${time}.`; ans = [`${aux}n't ${V.pp}`, `${aux} not ${V.pp}`]; full = `${subj} ${aux}n't ${V.pp} ${V.o} ${time}.`; }
+    if (F === "q") { text = `${gap} (${low} / ${V.b}) ${V.o} ${time}?`; ans = [`${aux} ${low} ${V.pp}`]; full = `${cap(aux)} ${low} ${V.pp} ${V.o} ${time}?`; }
+  }
+  const forms = V.p === V.b + "ed" || V.p === V.b + "d" ? "" : ` (${V.b}-${V.p}-${V.pp})`;
+  return { text, ans: ans.map(norm), full, why: T.why + FORM_WHY[T.tense][F] + forms };
+}
+
+// Ejercicio A: escribir el verbo. Solo reacciona cuando está bien.
+let rightA = 0, streakA = 0, curA, lockA = false;
+const inputA = document.getElementById("input-a"), itemA = document.getElementById("item-a"), whyA = document.getElementById("why-a");
+function scoreA() { document.getElementById("score-a").textContent = `Aciertos: ${rightA} · Racha: ${streakA}`; }
+function nextA() {
+  const T = pick(TIMES);
+  curA = makeSentence(T, T.txt);
+  document.getElementById("sent-a").textContent = curA.text;
+  inputA.value = ""; inputA.readOnly = false; itemA.classList.remove("right");
+  whyA.hidden = true; lockA = false; inputA.focus({ preventScroll: true });
+}
+inputA.addEventListener("input", () => {
+  if (lockA || !curA.ans.includes(norm(inputA.value))) return;
+  lockA = true; inputA.readOnly = true; itemA.classList.add("right");
+  whyA.hidden = false; whyA.textContent = "✓ " + curA.why;
+  rightA++; streakA++; scoreA();
+  setTimeout(nextA, 2200);
+});
+document.getElementById("skip-a").onclick = () => { streakA = 0; scoreA(); nextA(); };
+scoreA(); nextA();
+
+// Ejercicio B: elegir la expresión de tiempo. Un fallo solo apaga ese botón.
+let rightB = 0, streakB = 0, failedB = false;
+const optsB = document.getElementById("opts-b"), whyB = document.getElementById("why-b");
+function scoreB() { document.getElementById("score-b").textContent = `Aciertos: ${rightB} · Racha: ${streakB}`; }
+function nextB() {
+  const T = pick(TIMES.filter(t => t.bw));
+  const s = makeSentence(T, T.txt.replace(T.bw, "______"));
+  document.getElementById("sent-b").textContent = s.full;
+  whyB.hidden = true; failedB = false;
+  optsB.innerHTML = "";
+  shuffle(T.bo.slice()).forEach(o => {
+    const b = document.createElement("button");
+    b.textContent = o;
+    b.onclick = () => {
+      if (o !== T.bw) { b.disabled = true; failedB = true; return; }
+      optsB.querySelectorAll("button").forEach(x => x.disabled = true);
+      b.classList.add("right");
+      whyB.hidden = false; whyB.textContent = "✓ " + T.why;
+      rightB++; streakB = failedB ? 0 : streakB + 1; scoreB();
+      setTimeout(nextB, 2200);
+    };
+    optsB.appendChild(b);
+  });
+}
+scoreB(); nextB();
+</script>
+</body>
+</html>
